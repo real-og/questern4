@@ -12,27 +12,9 @@ import logic
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.begin_quest_btn:
         await message.answer(texts.ask_for_victim, reply_markup=kb.victim_chosen_kb)
-        await State.task_1_1.set()
+        await State.choosing_a_victim.set()
     else:
         await message.answer(texts.use_kb, reply_markup=kb.begin_quest_kb)
-
-
-@dp.message_handler(state=State.task_1_1)
-async def send_welcome(message: types.Message, state: FSMContext):
-    if message.text == texts.victim_chosen_btn:
-        await message.answer(texts.ask_for_codeword )
-        await State.task_1_2.set()
-    else:
-        await message.answer(texts.use_kb, reply_markup=kb.victim_chosen_kb)
-
-
-@dp.message_handler(state=State.task_1_2)
-async def send_welcome(message: types.Message, state: FSMContext):
-    if message.text.upper() == texts.task1_2_ans:
-        await message.answer(texts.task1_3, reply_markup=kb.answer_or_hint_kb)
-        await State.task_1_3.set()
-    else:
-        await message.answer(texts.wrong_answer)
 
 
 @dp.message_handler(state=State.task_1_3)
@@ -60,7 +42,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
             with open("audios/unavailable.ogg", "rb") as file:
                 file_data = file.read()
                 await message.answer_voice(file_data, reply_markup=kb.continue_kb)
-            await State.task_1_finished.set()
+            await State.asking_for_continue.set()
         elif len(answer) == 11:
             await message.answer(texts.wrong_number(answer), reply_markup=kb.get_hint_kb)
         else:

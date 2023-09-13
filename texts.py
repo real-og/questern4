@@ -26,7 +26,7 @@ wrong_answer = 'Неверно!'
 
 yes_btn = 'Да'
 no_btn = 'Нет'
-begin_quest_btn = "Начать QR-квест"
+begin_quest_btn = "Начать игру"
 victim_chosen_btn = "Жертва выбрана"
 answer_btn = "Написать ответ"
 hint_btn = "Получить подсказку"

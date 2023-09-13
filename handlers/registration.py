@@ -16,7 +16,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
 @dp.message_handler(state=State.confirmation_name)
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.yes_btn:
-        data = await state.get_data()
+        # data = await state.get_data()
         # await aiotable.set_team_name(message.from_user.id, data.get('team_name'))
         await message.answer(texts.succes_registrated, reply_markup=kb.begin_quest_kb)
         await State.start_confirmation.set()

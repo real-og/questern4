@@ -7,31 +7,57 @@ from states import State
 import aiotable
 
 
-# @dp.message_handler(state=State.start_confirmation)
-# async def get_to_menu(message: types.Message, state: FSMContext):
-#     data = await state.get_data()
-#     completed_tasks = data.get('completed_tasks')
-#     if len(completed_tasks) == 7:
-#         score = data.get('score')
-#         await message.answer(texts.congrats1)
-#         await message.answer(texts.generate_final_score(score))
-#         await message.answer(texts.congrats2)
-#         await message.answer(texts.congrats3)
-#         await State.finished.set()
-#         return
-    
-#     chat = await bot.get_chat(message.chat.id)
-#     if not chat.pinned_message:           
-#         with open('images/map.jpg', 'rb') as photo:
-#             mes = await message.answer_photo(photo, caption=texts.map_instruction)
-#         await mes.pin(disable_notification=True)
+@dp.message_handler(state=State.asking_for_continue)
+async def send_welcome(message: types.Message, state: FSMContext):
+    if message.text == texts.continue_btn:
+        await message.answer(texts.ask_for_victim, reply_markup=kb.victim_chosen_kb)
+        await State.choosing_a_victim.set()
+    else:
+        await message.answer(texts.use_kb, reply_markup=kb.continue_kb)
         
-#     await message.answer(texts.route_instruction)
-#     team_number = data.get('team_number')
-#     await message.answer(texts.route_header, reply_markup=kb.generate_locations_kb(team_number, completed_tasks))
-#     await State.menu.set()
 
-# @dp.message_handler(state=State.finished)
-# async def ge(message: types.Message, state: FSMContext):
-#     await message.answer(texts.quest_finished)
+@dp.message_handler(state=State.choosing_a_victim)
+async def send_welcome(message: types.Message, state: FSMContext):
+    if message.text == texts.victim_chosen_btn:
+        await message.answer(texts.ask_for_codeword)
+        await State.entering_code_name.set()
+    else:
+        await message.answer(texts.use_kb, reply_markup=kb.victim_chosen_kb)
+
+
+@dp.message_handler(state=State.entering_code_name)
+async def send_welcome(message: types.Message, state: FSMContext):
+    code_word = message.text.upper()
+    if code_word == texts.task1_2_ans:
+        await message.answer(texts.task1_3, reply_markup=kb.answer_or_hint_kb)
+        await State.task_1_3.set()
+
+    elif code_word == texts.task2_2_ans:
+        await message.answer(texts.task2_3, reply_markup=kb.answer_or_hint_kb)
+        await State.task_2_3.set()
+
+    elif code_word == texts.task5_2_ans:
+        await message.answer(texts.task5_3, reply_markup=kb.photoes_uploaded_kb)
+        with open('images/qr.png', 'rb') as photo:
+                await message.answer_photo(photo)
+        await State.task_5_3.set()
+
+    elif message.text.upper() == texts.task7_2_ans:
+        await message.answer(texts.task7_3, reply_markup=kb.done_kb)
+        await State.task_7_3.set()
+
+    elif code_word == texts.task3_2_ans:
+        await message.answer(texts.task3_3, reply_markup=kb.answer_or_hint_kb)
+        await State.task_3_3.set()
+
+    elif code_word == texts.task4_2_ans:
+        await message.answer(texts.task4_3, reply_markup=kb.answer_or_hint_kb)
+        await State.task_4_3.set()
+
+    elif code_word in texts.task6_2_ans:
+        await message.answer(texts.task6_3, reply_markup=kb.answer_or_hint_kb)
+        await State.task_6_3.set()
+
+    else:
+        await message.answer(texts.wrong_answer)
 

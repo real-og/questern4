@@ -11,7 +11,6 @@ import aiotable
 async def send_welcome(message: types.Message, state: FSMContext):
     await message.answer(texts.welcome)
     await State.entering_name.set()
-    # await State.task_6_finished.set()
 
 
 @dp.message_handler(commands=['help'], state="*")
