@@ -10,3 +10,8 @@ class State(StatesGroup):
     task_1_3 = State()
     task_1_answering = State()
     task_1_finished = State()
+    task_2_1 = State()
+    task_2_2 = State()
+    task_2_3 = State()
+    task_2_answering = State()
+    task_2_finished = State()

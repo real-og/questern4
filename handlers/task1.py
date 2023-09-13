@@ -11,7 +11,7 @@ import logic
 @dp.message_handler(state=State.start_confirmation)
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.begin_quest_btn:
-        await message.answer(texts.task1, reply_markup=kb.victim_chosen_kb)
+        await message.answer(texts.ask_for_victim, reply_markup=kb.victim_chosen_kb)
         await State.task_1_1.set()
     else:
         await message.answer(texts.use_kb, reply_markup=kb.begin_quest_kb)
@@ -20,7 +20,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
 @dp.message_handler(state=State.task_1_1)
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.victim_chosen_btn:
-        await message.answer(texts.task1_2)
+        await message.answer(texts.ask_for_codeword )
         await State.task_1_2.set()
     else:
         await message.answer(texts.use_kb, reply_markup=kb.victim_chosen_kb)
