@@ -20,3 +20,9 @@ class State(StatesGroup):
     task_3_3 = State()
     task_3_answering = State()
     task_3_finished = State()
+
+    task_4_1 = State()
+    task_4_2 = State()
+    task_4_3 = State()
+    task_4_answering = State()
+    task_4_finished = State()

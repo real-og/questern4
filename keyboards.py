@@ -54,6 +54,10 @@ answer_or_more_hint_kb = ReplyKeyboardMarkup([[texts.answer_btn, texts.more_hint
                                      resize_keyboard=True,
                                      one_time_keyboard=True)
 
+answer_or_more_hint2_kb = ReplyKeyboardMarkup([[texts.answer_btn, texts.more_hint2_btn]],
+                                     resize_keyboard=True,
+                                     one_time_keyboard=True)
+
 get_hint_kb = ReplyKeyboardMarkup([[texts.hint_btn]],
                                      resize_keyboard=True,
                                      one_time_keyboard=True)
