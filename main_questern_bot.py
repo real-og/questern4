@@ -7,11 +7,11 @@ from aiogram.types import BotCommand
 async def setup_bot_commands(dp):
     bot_commands = [
         BotCommand(command="/help", description="Помощь"),
-        # BotCommand(command="/start", description="Начать")
+        BotCommand(command="/start", description="Начать")
     ]
     await bot.set_my_commands(bot_commands)
 
 if __name__ == '__main__':
-    print("Starting Questern3 bot")
+    print("Starting Questern4 bot")
     executor.start_polling(dp, skip_updates=True, on_startup=setup_bot_commands)
     
