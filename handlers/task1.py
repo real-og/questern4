@@ -56,9 +56,12 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await State.task_1_3.set()
     elif answer.isdecimal():
         if answer == texts.task1_3_ans:
-            await message.answer(texts.task_1_finish, reply_markup=kb.continue_kb)
+            # await message.answer(texts.task_1_finish, reply_markup=kb.continue_kb)
+            with open("audios/unavailable.ogg", "rb") as file:
+                file_data = file.read()
+                await message.answer_voice(file_data, reply_markup=kb.continue_kb)
             await State.task_1_finished.set()
-        elif len(answer) == 10:
+        elif len(answer) == 11:
             await message.answer(texts.wrong_number(answer), reply_markup=kb.get_hint_kb)
         else:
             await message.answer(texts.ask_for_whole_number)
