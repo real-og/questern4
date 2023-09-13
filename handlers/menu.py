@@ -14,7 +14,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await State.choosing_a_victim.set()
     else:
         await message.answer(texts.use_kb, reply_markup=kb.continue_kb)
-        
+
 
 @dp.message_handler(state=State.choosing_a_victim)
 async def send_welcome(message: types.Message, state: FSMContext):
@@ -57,6 +57,11 @@ async def send_welcome(message: types.Message, state: FSMContext):
     elif code_word in texts.task6_2_ans:
         await message.answer(texts.task6_3, reply_markup=kb.answer_or_hint_kb)
         await State.task_6_3.set()
+
+    elif code_word == texts.exit_word:
+        await message.answer(texts.ending)
+        await message.answer(texts.ending_video)
+        await State.ended.set()
 
     else:
         await message.answer(texts.wrong_answer)

@@ -10,6 +10,8 @@ class State(StatesGroup):
     choosing_a_victim = State()
     asking_for_continue = State()
 
+    ended = State()
+
     task_1_1 = State()
     task_1_2 = State()
     task_1_3 = State()
