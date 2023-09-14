@@ -10,19 +10,35 @@ import aiotable
 @dp.message_handler(state=State.asking_for_continue)
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.continue_btn:
-        await message.answer(texts.ask_for_victim, reply_markup=kb.victim_chosen_kb)
+        await message.answer(texts.ask_for_victim)
         await State.choosing_a_victim.set()
-    else:
-        await message.answer(texts.use_kb, reply_markup=kb.continue_kb)
 
 
 @dp.message_handler(state=State.choosing_a_victim)
 async def send_welcome(message: types.Message, state: FSMContext):
-    if message.text == texts.victim_chosen_btn:
-        await message.answer(texts.ask_for_codeword)
+    await message.answer(texts.generate_confirmation_victim_msg(message.text), reply_markup=kb.yes_no_kb)
+    await State.confirmation_victim.set()
+
+
+@dp.message_handler(state=State.confirmation_victim)
+async def send_welcome(message: types.Message, state: FSMContext):
+    if message.text == texts.yes_btn:
+        await message.answer(texts.ask_photo_victim)
+        await State.entering_photo_victim.set()
+    elif message.text == texts.no_btn:
+        await message.answer(texts.enter_another_victim)
+        await State.choosing_a_victim.set()
+    else:
+        await message.answer(texts.use_kb, reply_markup=kb.yes_no_kb)
+
+
+@dp.message_handler(state=State.entering_photo_victim, content_types=['any'])
+async def send_welcome(message: types.Message, state: FSMContext):
+    if message.content_type in ['photo', 'document']:
+        await message.answer(texts.photo_received)
         await State.entering_code_name.set()
     else:
-        await message.answer(texts.use_kb, reply_markup=kb.victim_chosen_kb)
+        await message.answer(texts.send_photo)
 
 
 @dp.message_handler(state=State.entering_code_name)

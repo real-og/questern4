@@ -11,7 +11,7 @@ import logic
 @dp.message_handler(state=State.start_confirmation)
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.begin_quest_btn:
-        await message.answer(texts.ask_for_victim, reply_markup=kb.victim_chosen_kb)
+        await message.answer(texts.ask_for_victim)
         await State.choosing_a_victim.set()
     else:
         await message.answer(texts.use_kb, reply_markup=kb.begin_quest_kb)

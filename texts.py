@@ -4,6 +4,9 @@ import random
 def generate_confirmation_msg(name):
     return f"{name} - так будет называться Ваша команда. Уверены?"
 
+def generate_confirmation_victim_msg(name):
+    return f"{name} хочет принести себя в жертву? Вы уверены?"
+
 def wrong_number(input):
     return f"Вы ошиблись на {logic.count_non_matching_digits(input, task1_3_ans)} цифру(ы)"
 
@@ -40,8 +43,16 @@ done_btn = 'Выполнено'
 help_message = """По всем вопросам обращайтесь к координаторам в мастер-локации."""
 
 
+ask_photo_victim = "Пришлите фото жертвы. Хочу посмотреть на этого альтруиста"
+
+enter_another_victim = "Давайте другого"
+
 ask_for_victim = "Чтобы получить загадку, выберите одного игрока из вашей команды. \
-Кто готов принести себя в жертву в обмен на загадку?"
+Кто готов принести себя в жертву в обмен на загадку? Напишите имя жертвы"
+
+send_photo = 'Отправляйте фото'
+
+photo_received = 'Я принимаю вашу жертву\nВведите кодовое слово'
 
 ask_for_codeword = """Введите кодовое слово, которое сообщит мой помощник."""
 

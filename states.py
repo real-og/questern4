@@ -8,6 +8,8 @@ class State(StatesGroup):
 
     entering_code_name = State()
     choosing_a_victim = State()
+    confirmation_victim = State()
+    entering_photo_victim = State()
     asking_for_continue = State()
 
     ended = State()
