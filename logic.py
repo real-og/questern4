@@ -1,5 +1,6 @@
 import unicodedata
 import re
+from loader import bot, ADMIN_IDS
 
 def remove_punctuation(s):
     no_punctuation = ''.join([char for char in s if not unicodedata.category(char).startswith('P')])
@@ -13,6 +14,18 @@ def count_non_matching_digits(str1, str2):
         if str1[i] != str2[i] and str1[i].isdigit() and str2[i].isdigit():
             count += 1
     return count
+
+async def notify_admins(level, state):
+    data = await state.get_data()
+    team_name = data.get('team_name')
+    for id in ADMIN_IDS:
+        print(id)
+        try:
+            await bot.send_message(id, f"{team_name} закончил уровень {level}")
+        except Exception as e:
+            print(f'Не отправилось для {id}')
+
+
 
 
 

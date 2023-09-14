@@ -1,4 +1,4 @@
-from loader import dp, CODES
+from loader import dp
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 import texts

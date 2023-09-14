@@ -1,4 +1,4 @@
-from loader import dp, CODES, bot
+from loader import dp, bot
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 import texts
@@ -30,6 +30,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
     elif answer.upper() == texts.task2_3_ans:
         await message.answer(texts.task_2_finish, reply_markup=kb.continue_kb)
         await State.asking_for_continue.set()
+        await logic.notify_admins('Ультрафиолет', state)
     else:
         await message.answer(texts.wrong_answer, reply_markup=kb.get_hint_kb)
 

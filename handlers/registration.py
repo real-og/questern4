@@ -1,4 +1,4 @@
-from loader import dp, CODES
+from loader import dp
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 import texts
@@ -20,6 +20,9 @@ async def send_welcome(message: types.Message, state: FSMContext):
         # await aiotable.set_team_name(message.from_user.id, data.get('team_name'))
         await message.answer(texts.succes_registrated, reply_markup=kb.begin_quest_kb)
         await State.start_confirmation.set()
-    else:
+    elif message.text == texts.no_btn:
         await message.answer(texts.enter_another_name)
         await State.entering_name.set()
+    else:
+        await message.answer(texts.use_kb, reply_markup=kb.yes_no_kb)
+
