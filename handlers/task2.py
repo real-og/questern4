@@ -16,7 +16,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await message.answer(texts.enter_answer, reply_markup=kb.get_hint_kb)
         await State.task_2_answering.set()
     else:
-        await message.answer(texts.use_kb, reply_markup=kb.answer_or_hint_kb)
+        await message.answer(texts.use_a_button, reply_markup=kb.answer_or_hint_kb)
 
 
 @dp.message_handler(state=State.task_2_answering)

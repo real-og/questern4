@@ -16,5 +16,5 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await logic.notify_admins('Камера', state)
         await aiotable.mark_cell(message.from_user.id, 7, "д")
     else:
-        await message.answer(texts.use_kb, reply_markup=kb.done_kb)
+        await message.answer(texts.use_a_button, reply_markup=kb.done_kb)
 
