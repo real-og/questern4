@@ -49,6 +49,11 @@ async def mark_cell(id, level, value):
 
     await sheet.format(range, format)
 
+async def get_ids():
+    sheet = await get_sheet()
+    res = await sheet.col_values(1) 
+    return res
+
 
 
 
