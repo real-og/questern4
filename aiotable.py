@@ -29,13 +29,27 @@ async def append_user(id: str, username: str, team_name):
             await sheet.update_cell(cell.row, 3, team_name)
 
 
+green = {'red': 0.44, 'green': 1, 'blue': 0.79}
+yellow = {'red': 1, 'green': 1, 'blue': 0.67}
+
 async def mark_cell(id, level, value):
     sheet = await get_sheet()
     cell = await sheet.find(str(id))
     if cell is None:
         return
     row_number = cell.row
-    await sheet.update_cell(row_number, level + 3, value)
+    if value == 'д':
+         color = green
+    else:
+         color = yellow
+    # await sheet.update_cell(row_number, level + 3, value)
+
+    range = f'{chr(level + 67)}{row_number}:{chr(level + 67)}{row_number}'
+    format = {'backgroundColor': color}
+
+    await sheet.format(range, format)
+
+
 
 
 

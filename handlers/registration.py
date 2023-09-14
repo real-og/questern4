@@ -17,9 +17,9 @@ async def send_welcome(message: types.Message, state: FSMContext):
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.yes_btn:
         data = await state.get_data()
-        await aiotable.append_user(message.from_user.id, message.from_user.username, data.get('team_name'))
         await message.answer(texts.succes_registrated, reply_markup=kb.begin_quest_kb)
         await State.start_confirmation.set()
+        await aiotable.append_user(message.from_user.id, message.from_user.username, data.get('team_name'))
     elif message.text == texts.no_btn:
         await message.answer(texts.enter_another_name)
         await State.entering_name.set()
