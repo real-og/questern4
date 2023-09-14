@@ -41,6 +41,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await message.answer(texts.task_4_finish, reply_markup=kb.continue_kb)
         await State.asking_for_continue.set()
         await logic.notify_admins('Подарки', state)
+        await aiotable.mark_cell(message.from_user.id, 4, "д")
     else:
         await message.answer(texts.wrong_answer, reply_markup=kb.get_hint_kb)
 

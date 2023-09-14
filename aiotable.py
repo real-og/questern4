@@ -20,45 +20,22 @@ async def get_sheet(agcm=agcm):
     zero_ws = await ss.get_worksheet(0)
     return zero_ws
 
-async def append_user(id: str, username: str, code):
+async def append_user(id: str, username: str, team_name):
         sheet = await get_sheet()
         cell = await sheet.find(str(id))
         if cell is None:
-            await sheet.append_row([id, username, code])
+            await sheet.append_row([id, username, team_name])
         else:
-            await sheet.update_cell(cell.row, 5, '1')
-            await sheet.update_cell(cell.row, 3, code)
+            await sheet.update_cell(cell.row, 3, team_name)
 
-async def set_team_name(id: str, name: str):
-        sheet = await get_sheet()
-        cell = await sheet.find(str(id))
-        if cell is None:
-            print(f'not found {id}')
-            return
-        else:
-            await sheet.update_cell(cell.row, 4, name)
-            
 
-async def implement_score(id, level, amount):
+async def mark_cell(id, level, value):
     sheet = await get_sheet()
     cell = await sheet.find(str(id))
     if cell is None:
         return
     row_number = cell.row
-    cell = await sheet.cell(row_number, level + 5)
-    if cell.value:
-        await sheet.update_cell(row_number, level + 5, amount + int(cell.value))
-    else:
-        await sheet.update_cell(row_number, level + 5, amount)
-         
+    await sheet.update_cell(row_number, level + 3, value)
 
-async def set_current_level(id, level):
-    sheet = await get_sheet()
-    cell = await sheet.find(str(id))
-    if cell is None:
-        return
-    row_number = cell.row
-    await sheet.update_cell(row_number, 5, level)
-    if int(level) in [1, 2, 5]:
-         await sheet.update_cell(row_number, 5 + level, 0)
-         
+
+

@@ -31,37 +31,45 @@ async def send_welcome(message: types.Message, state: FSMContext):
     if code_word == texts.task1_2_ans:
         await message.answer(texts.task1_3, reply_markup=kb.answer_or_hint_kb)
         await State.task_1_3.set()
+        await aiotable.mark_cell(message.from_user.id, 1, "Здесь")
 
     elif code_word == texts.task2_2_ans:
         await message.answer(texts.task2_3, reply_markup=kb.answer_or_hint_kb)
         await State.task_2_3.set()
+        await aiotable.mark_cell(message.from_user.id, 2, "Здесь")
 
     elif code_word == texts.task5_2_ans:
         await message.answer(texts.task5_3, reply_markup=kb.photoes_uploaded_kb)
         with open('images/qr.png', 'rb') as photo:
                 await message.answer_photo(photo)
         await State.task_5_3.set()
+        await aiotable.mark_cell(message.from_user.id, 5, "Здесь")
 
     elif message.text.upper() == texts.task7_2_ans:
         await message.answer(texts.task7_3, reply_markup=kb.done_kb)
         await State.task_7_3.set()
+        await aiotable.mark_cell(message.from_user.id, 7, "Здесь")
 
     elif code_word == texts.task3_2_ans:
         await message.answer(texts.task3_3, reply_markup=kb.answer_or_hint_kb)
         await State.task_3_3.set()
+        await aiotable.mark_cell(message.from_user.id, 3, "Здесь")
 
     elif code_word == texts.task4_2_ans:
         await message.answer(texts.task4_3, reply_markup=kb.answer_or_hint_kb)
         await State.task_4_3.set()
+        await aiotable.mark_cell(message.from_user.id, 4, "Здесь")
 
     elif code_word in texts.task6_2_ans:
         await message.answer(texts.task6_3, reply_markup=kb.answer_or_hint_kb)
         await State.task_6_3.set()
+        await aiotable.mark_cell(message.from_user.id, 6, "Здесь")
 
     elif code_word == texts.exit_word:
         await message.answer(texts.ending)
         await message.answer(texts.ending_video)
         await State.ended.set()
+        await aiotable.mark_cell(message.from_user.id, 8, "Здесь")
 
     else:
         await message.answer(texts.wrong_answer)

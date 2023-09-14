@@ -19,7 +19,6 @@ async def notify_admins(level, state):
     data = await state.get_data()
     team_name = data.get('team_name')
     for id in ADMIN_IDS:
-        print(id)
         try:
             await bot.send_message(id, f"{team_name} закончил уровень {level}")
         except Exception as e:

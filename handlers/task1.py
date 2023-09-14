@@ -44,6 +44,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
                 await message.answer_voice(file_data, reply_markup=kb.continue_kb)
             await State.asking_for_continue.set()
             await logic.notify_admins('Телефон', state)
+            await aiotable.mark_cell(message.from_user.id, 1, "д")
         elif len(answer) == 11:
             await message.answer(texts.wrong_number(answer), reply_markup=kb.get_hint_kb)
         else:
