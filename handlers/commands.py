@@ -27,6 +27,6 @@ async def send_welcome(message: types.Message, state: FSMContext):
     for id in ids[1:]:
         print(id)
         try:
-            await bot.send_message(id, texts.task3_hint_1)
+            await bot.send_message(id, texts.task3_hint_2)
         except:
             print(f'Не отправлена подсказка для {id}')
