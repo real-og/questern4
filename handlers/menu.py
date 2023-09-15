@@ -55,9 +55,12 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await aiotable.mark_cell(message.from_user.id, 2, "Здесь")
 
     elif code_word == texts.task5_2_ans:
-        await message.answer(texts.task5_3, reply_markup=kb.photoes_uploaded_kb)
+        await message.answer(texts.task5_3_1)
+        await message.answer(texts.task5_3_2)
         with open('images/qr.png', 'rb') as photo:
-                await message.answer_photo(photo)
+                await message.answer_photo(photo,
+                                            reply_markup=kb.photoes_uploaded_kb,
+                                            caption=texts.task5_3_3)
         await State.task_5_3.set()
         await aiotable.mark_cell(message.from_user.id, 5, "Здесь")
 
