@@ -44,4 +44,12 @@ done_kb = ReplyKeyboardMarkup([[texts.done_btn]],
                                      resize_keyboard=True,
                                      one_time_keyboard=True)
 
+yes_kb = ReplyKeyboardMarkup([[texts.yes_btn]],
+                                     resize_keyboard=True,
+                                     one_time_keyboard=True)
+
+ready_kb = ReplyKeyboardMarkup([[texts.ready_btn]],
+                                     resize_keyboard=True,
+                                     one_time_keyboard=True)
+
 

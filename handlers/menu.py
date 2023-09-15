@@ -79,15 +79,16 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await State.task_4_3.set()
         await aiotable.mark_cell(message.from_user.id, 4, "Здесь")
 
-    elif code_word in texts.task6_2_ans:
-        await message.answer(texts.task6_3, reply_markup=kb.answer_or_hint_kb)
-        await State.task_6_3.set()
+    elif code_word == texts.task6_2_ans:
+        await message.answer(texts.task6_3_1)
+        await message.answer(texts.task6_3_2, reply_markup=kb.yes_kb)
+        await State.task_6_3_yes.set()
         await aiotable.mark_cell(message.from_user.id, 6, "Здесь")
 
     elif code_word == texts.exit_word:
         await message.answer(texts.ending)
-        await message.answer(texts.ending_video)
-        await State.ended.set()
+        with open('images/final_video.MOV', 'rb') as video:
+                await message.answer_video(video)
         await aiotable.mark_cell(message.from_user.id, 8, "Здесь")
 
     else:
