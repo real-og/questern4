@@ -19,6 +19,9 @@ async def send_welcome(message: types.Message, state: FSMContext):
     elif message.text == texts.answer_btn:
         await message.answer(texts.enter_answer, reply_markup=kb.get_hint_kb)
         await State.task_4_answering.set()
+    elif logic.remove_punctuation(message.text.upper()) in texts.task4_wrong_ans:
+        ans = texts.task4_wrong_ans.get(logic.remove_punctuation(message.text.upper()))
+        await message.answer(ans, reply_markup=kb.answer_or_hint_kb)
     else:
         await message.answer(texts.use_a_button, reply_markup=kb.answer_or_hint_kb)
 
@@ -36,7 +39,8 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await message.answer(texts.task4_hint_3, reply_markup=kb.answer_or_hint_kb)
         await State.task_4_3.set()
     elif logic.remove_punctuation(answer.upper()) in texts.task4_wrong_ans:
-        await message.answer(texts.no_need_question_2, reply_markup=kb.get_hint_kb)
+        ans = texts.task4_wrong_ans.get(logic.remove_punctuation(message.text.upper()))
+        await message.answer(ans, reply_markup=kb.get_hint_kb)
     elif answer.upper() == texts.task4_3_ans:
         await message.answer(texts.task_4_finish, reply_markup=kb.continue_kb)
         await State.asking_for_continue.set()
