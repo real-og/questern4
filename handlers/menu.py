@@ -45,7 +45,8 @@ async def send_welcome(message: types.Message, state: FSMContext):
 async def send_welcome(message: types.Message, state: FSMContext):
     code_word = message.text.upper()
     if code_word == texts.task1_2_ans:
-        await message.answer(texts.enter_number, reply_markup=kb.get_hint_kb)
+        await message.answer(texts.task1_3_1)
+        await message.answer(texts.task1_3_2, reply_markup=kb.get_hint_kb)
         await State.task_1_answering.set()
         await aiotable.mark_cell(message.from_user.id, 1, "Здесь")
 
@@ -92,5 +93,5 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await aiotable.mark_cell(message.from_user.id, 8, "Здесь")
 
     else:
-        await message.answer(texts.wrong_answer)
+        await message.answer(texts.wrong_code_word)
 
