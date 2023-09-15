@@ -5,11 +5,17 @@ import texts
 import keyboards as kb
 from states import State
 import aiotable
+import logic
 
 
 @dp.message_handler(state=State.asking_for_continue)
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.continue_btn:
+        status_victim = logic.get_status()
+        if status_victim == "b'0'":
+            await message.answer(texts.enter_code_w)
+            await State.entering_code_name.set()
+            return
         await message.answer(texts.ask_for_victim)
         await State.choosing_a_victim.set()
 

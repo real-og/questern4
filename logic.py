@@ -1,6 +1,8 @@
 import unicodedata
 import re
 from loader import bot, ADMIN_IDS
+import redis
+
 
 def remove_punctuation(s):
     no_punctuation = ''.join([char for char in s if not unicodedata.category(char).startswith('P')])
@@ -25,7 +27,22 @@ async def notify_admins(level, state):
             print(f'Не отправилось для {id}')
 
 
+def get_status():
+    try:
+        redis_client = redis.Redis(host='localhost', port=6379, password=None)
+        current_value = redis_client.get('victim')
+        if current_value is None:
+            redis_client.set('victim', int(True))
+    
+    except Exception as e:
+        print("Произошла ошибка:", e)
+        return None
+    return str(current_value)
 
-
-
-
+def set_victim(enable=True):
+    try:
+        redis_client = redis.Redis(host='localhost', port=6379, password=None)
+        redis_client.set('victim', int(enable))
+    except Exception as e:
+        print("Произошла ошибка:", e)
+        return None
