@@ -22,7 +22,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await message.answer(texts.enter_answer, reply_markup=kb.get_hint_kb)
         await State.task_6_answering.set()
     else:
-        await message.answer(texts.use_kb, reply_markup=kb.yes_kb)
+        await message.answer(texts.use_kb, reply_markup=kb.ready_kb)
 
 @dp.message_handler(state=State.task_6_3)
 async def send_welcome(message: types.Message, state: FSMContext):
@@ -50,4 +50,11 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await aiotable.mark_cell(message.from_user.id, 6, "д")
     else:
         await message.answer(texts.no_part, reply_markup=kb.get_hint_kb)
+
+
+@dp.callback_query_handler(state='*')
+async def send_channels(callback: types.CallbackQuery, state: FSMContext):
+    if callback.data == 'sound':
+        await callback.message.answer(texts.task_1_finish)
+
 
