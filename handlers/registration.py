@@ -17,6 +17,13 @@ async def send_welcome(message: types.Message, state: FSMContext):
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.yes_btn:
         data = await state.get_data()
+
+        with open('audios/saw.gif', 'rb') as video:
+            await message.answer_animation(video)
+
+        # with open('audios/saw.MOV', 'rb') as video:
+        #     await message.answer_animation(video, caption=texts.succes_registrated, reply_markup=kb.begin_quest_kb)
+
         await message.answer(texts.succes_registrated, reply_markup=kb.begin_quest_kb)
         await State.start_confirmation.set()
         await aiotable.append_user(message.from_user.id, message.from_user.username, data.get('team_name'))
