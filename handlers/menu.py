@@ -18,6 +18,8 @@ async def send_welcome(message: types.Message, state: FSMContext):
             return
         await message.answer(texts.ask_for_victim, reply_markup=kb.victim_chosen_kb)
         await State.choosing_a_victim.set()
+    else:
+        await message.answer(texts.use_kb, reply_markup=kb.continue_kb)
 
 
 @dp.message_handler(state=State.choosing_a_victim)
@@ -68,7 +70,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
 
     elif code_word == texts.task2_2_ans:
         await message.answer(texts.task2_3, reply_markup=kb.answer_or_hint_kb)
-        await State.task_2_3.set()
+        await State.task_2_answering.set()
         await aiotable.mark_cell(message.from_user.id, 2, "Здесь")
 
     elif code_word == texts.task5_2_ans:
@@ -89,12 +91,12 @@ async def send_welcome(message: types.Message, state: FSMContext):
 
     elif code_word == texts.task3_2_ans:
         await message.answer(texts.task3_3, reply_markup=kb.answer_or_hint_kb)
-        await State.task_3_3.set()
+        await State.task_3_answering.set()
         await aiotable.mark_cell(message.from_user.id, 3, "Здесь")
 
     elif code_word == texts.task4_2_ans:
         await message.answer(texts.task4_3, reply_markup=kb.answer_or_hint_kb)
-        await State.task_4_3.set()
+        await State.task_4_answering.set()
         await aiotable.mark_cell(message.from_user.id, 4, "Здесь")
 
     elif code_word == texts.task6_2_ans:

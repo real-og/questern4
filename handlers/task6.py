@@ -7,7 +7,7 @@ from states import State
 import aiotable
 import logic
 
-
+#коды
 @dp.message_handler(state=State.task_6_3_yes)
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.yes_btn:
@@ -24,15 +24,15 @@ async def send_welcome(message: types.Message, state: FSMContext):
     else:
         await message.answer(texts.use_kb, reply_markup=kb.ready_kb)
 
-@dp.message_handler(state=State.task_6_3)
-async def send_welcome(message: types.Message, state: FSMContext):
-    if message.text == texts.hint_btn:
-        await message.answer(texts.task6_hint_1, reply_markup=kb.answer_or_hint_kb)
-    elif message.text == texts.answer_btn:
-        await message.answer(texts.enter_answer, reply_markup=kb.get_hint_kb)
-        await State.task_6_answering.set()
-    else:
-        await message.answer(texts.use_a_button, reply_markup=kb.answer_or_hint_kb)
+# @dp.message_handler(state=State.task_6_3)
+# async def send_welcome(message: types.Message, state: FSMContext):
+#     if message.text == texts.hint_btn:
+#         await message.answer(texts.task6_hint_1, reply_markup=kb.answer_or_hint_kb)
+#     elif message.text == texts.answer_btn:
+#         await message.answer(texts.enter_answer, reply_markup=kb.get_hint_kb)
+#         await State.task_6_answering.set()
+#     else:
+#         await message.answer(texts.use_a_button, reply_markup=kb.answer_or_hint_kb)
 
 
 @dp.message_handler(state=State.task_6_answering)
@@ -40,7 +40,10 @@ async def send_welcome(message: types.Message, state: FSMContext):
     answer = message.text
     if message.text == texts.hint_btn:
         await message.answer(texts.task6_hint_1, reply_markup=kb.answer_or_hint_kb)
-        await State.task_6_3.set()
+
+    elif message.text == texts.answer_btn:
+        await message.answer(texts.enter_answer, reply_markup=kb.get_hint_kb)
+
     elif logic.remove_punctuation(answer.upper()) in texts.task6_wrong_ans:
         await message.answer(texts.rigth, reply_markup=kb.get_hint_kb)
     elif answer.upper() == texts.task6_3_ans:

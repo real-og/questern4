@@ -7,7 +7,7 @@ from states import State
 import aiotable
 import logic
 
-
+#фотографии
 @dp.message_handler(state=State.task_5_3)
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.uploaded_btn:
