@@ -28,9 +28,13 @@ import logic
 #подарки
 @dp.message_handler(state=State.task_4_answering)
 async def send_welcome(message: types.Message, state: FSMContext):
-    answer = message.text
+    answer = message.text.replace('ё', 'е')
+    print(answer)
     if message.text == texts.hint_btn:
         await message.answer(texts.task4_hint_1, reply_markup=kb.answer_or_more_hint_kb)
+
+    elif message.text == texts.answer_btn:
+        await message.answer(texts.enter_answer, reply_markup=kb.get_hint_kb)
 
     elif message.text == texts.more_hint_btn:
         await message.answer(texts.task4_hint_2, reply_markup=kb.answer_or_more_hint2_kb)
@@ -39,7 +43,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await message.answer(texts.task4_hint_3, reply_markup=kb.answer_or_hint_kb)
 
     elif logic.remove_punctuation(answer.upper()) in texts.task4_wrong_ans:
-        ans = texts.task4_wrong_ans.get(logic.remove_punctuation(message.text.upper()))
+        ans = texts.task4_wrong_ans.get(logic.remove_punctuation(answer.upper()))
         await message.answer(ans, reply_markup=kb.get_hint_kb)
     elif answer.upper() == texts.task4_3_ans:
         await message.answer(texts.task_4_finish, reply_markup=kb.continue_kb)

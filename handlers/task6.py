@@ -49,7 +49,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
     elif answer.upper() == texts.task6_3_ans:
         await message.answer(texts.task_6_finish, reply_markup=kb.continue_kb)
         await State.asking_for_continue.set()
-        await logic.notify_admins('QR-код', state)
+        await logic.notify_admins('Коды', state)
         await aiotable.mark_cell(message.from_user.id, 6, "д")
     else:
         await message.answer(texts.no_part, reply_markup=kb.get_hint_kb)
