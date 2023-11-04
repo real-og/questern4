@@ -17,26 +17,12 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await message.answer(texts.use_kb, reply_markup=kb.begin_quest_kb)
 
 
-# @dp.message_handler(state=State.task_1_3)
-# async def send_welcome(message: types.Message, state: FSMContext):
-#     if message.text == texts.hint_btn:
-#         await message.answer(texts.task1_hint_1, reply_markup=kb.answer_or_more_hint_kb)
-#     elif message.text == texts.more_hint_btn:
-#         await message.answer(texts.task1_hint_2, reply_markup=kb.answer_or_hint_kb)
-#     elif message.text == texts.answer_btn:
-#         await message.answer(texts.enter_number, reply_markup=kb.get_hint_kb)
-#         await State.task_1_answering.set()
-#     else:
-#         await message.answer(texts.use_a_button, reply_markup=kb.answer_or_hint_kb)
-
-
 @dp.message_handler(state=State.task_1_answering)
 async def send_welcome(message: types.Message, state: FSMContext):
     answer = message.text
     
     if message.text == texts.hint_btn:
         await message.answer(texts.task1_hint_1, reply_markup=kb.answer_or_more_hint_kb)
-        # await State.task_1_3.set()
 
     elif message.text == texts.more_hint_btn:
         await message.answer(texts.task1_hint_2, reply_markup=kb.answer_or_hint_kb)
@@ -46,7 +32,6 @@ async def send_welcome(message: types.Message, state: FSMContext):
 
     elif answer.isdecimal():
         if answer == texts.task1_3_ans:
-            # await message.answer(texts.task_1_finish, reply_markup=kb.continue_kb)
             with open("audios/unavailable.ogg", "rb") as file:
                 file_data = file.read()
                 await message.answer_voice(file_data, reply_markup=kb.no_sound_kb)

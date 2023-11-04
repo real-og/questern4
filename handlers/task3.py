@@ -8,19 +8,6 @@ import aiotable
 import logic
 
 
-# @dp.message_handler(state=State.task_3_3)
-# async def send_welcome(message: types.Message, state: FSMContext):
-#     if message.text == texts.hint_btn:
-#         await message.answer(texts.task3_hint_1, reply_markup=kb.answer_or_hint_kb)
-#     elif message.text == texts.answer_btn:
-#         await message.answer(texts.enter_answer, reply_markup=kb.get_hint_kb)
-#         await State.task_3_answering.set()
-#     elif logic.remove_punctuation(message.text.upper()) in texts.task3_wrong_ans:
-#         ans = texts.task3_wrong_ans.get(logic.remove_punctuation(message.text.upper()))
-#         await message.answer(ans, reply_markup=kb.answer_or_hint_kb)
-#     else:
-#         await message.answer(texts.write_random_joke_3(), reply_markup=kb.answer_or_hint_kb)
-
 #безмолвие
 @dp.message_handler(state=State.task_3_answering)
 async def send_welcome(message: types.Message, state: FSMContext):
