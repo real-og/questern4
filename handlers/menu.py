@@ -16,19 +16,22 @@ async def send_welcome(message: types.Message, state: FSMContext):
             await message.answer(texts.enter_code_w)
             await State.entering_code_name.set()
             return
-        await message.answer(texts.ask_for_victim, reply_markup=kb.victim_chosen_kb)
-        await State.choosing_a_victim.set()
+        await message.answer(texts.ask_for_victim)
+        print(1)
+        await message.answer(texts.victim_received)
+        await State.entering_code_name.set()
+        # await State.choosing_a_victim.set()
     else:
         await message.answer(texts.use_kb, reply_markup=kb.continue_kb)
 
 
-@dp.message_handler(state=State.choosing_a_victim)
-async def send_welcome(message: types.Message, state: FSMContext):
-    if message.text == texts.victim_chosen_btn:
-        await message.answer(texts.victim_received)
-        await State.entering_code_name.set()
-    else:
-        await message.answer(texts.use_kb, reply_markup=kb.victim_chosen_kb)
+# @dp.message_handler(state=State.choosing_a_victim)
+# async def send_welcome(message: types.Message, state: FSMContext):
+#     if message.text == texts.victim_chosen_btn:
+#         await message.answer(texts.victim_received)
+#         await State.entering_code_name.set()
+#     else:
+#         await message.answer(texts.use_kb, reply_markup=kb.victim_chosen_kb)
 
 
 @dp.message_handler(state=State.entering_code_name)
@@ -68,9 +71,12 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await aiotable.mark_cell(message.from_user.id, 4, "Здесь")
 
     elif code_word == texts.task6_2_ans:
-        await message.answer(texts.task6_3_1)
-        await message.answer(texts.task6_3_2, reply_markup=kb.yes_kb)
-        await State.task_6_3_yes.set()
+        # await message.answer(texts.task6_3_1)
+        # await message.answer(texts.task6_3_2, reply_markup=kb.yes_kb)
+        await message.answer(texts.task6_new1)
+        await message.answer(texts.task6_new2, reply_markup=kb.answer_or_hint_kb)
+        # await State.task_6_3_yes.set()
+        await State.task_6_answering.set()
         await aiotable.mark_cell(message.from_user.id, 6, "Здесь")
 
     elif code_word == texts.exit_word:

@@ -6,13 +6,15 @@ import keyboards as kb
 from states import State
 import aiotable
 import logic
+import score
 
 #телефон
 @dp.message_handler(state=State.start_confirmation)
 async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.begin_quest_btn:
-        await message.answer(texts.ask_for_victim, reply_markup=kb.victim_chosen_kb)
-        await State.choosing_a_victim.set()
+        await message.answer(texts.ask_for_victim)
+        await message.answer(texts.victim_received)
+        await State.entering_code_name.set()
     else:
         await message.answer(texts.use_kb, reply_markup=kb.begin_quest_kb)
 
@@ -39,6 +41,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
             await State.asking_for_continue.set()
             await logic.notify_admins('Телефон', state)
             await aiotable.mark_cell(message.from_user.id, 1, "д")
+            await score.complete_level(message.from_id, 1)
         elif len(answer) == 11:
             await message.answer(texts.wrong_number(answer), reply_markup=kb.get_hint_kb)
         else:

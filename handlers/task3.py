@@ -6,7 +6,7 @@ import keyboards as kb
 from states import State
 import aiotable
 import logic
-
+import score
 
 #безмолвие
 @dp.message_handler(state=State.task_3_answering)
@@ -27,6 +27,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await State.asking_for_continue.set()
         await logic.notify_admins('Безмолвие', state)
         await aiotable.mark_cell(message.from_user.id, 3, "д")
+        await score.complete_level(message.from_id, 3)
     else:
         await message.answer(texts.write_random_joke_3(), reply_markup=kb.get_hint_kb)
 

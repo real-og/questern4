@@ -6,6 +6,7 @@ import keyboards as kb
 from states import State
 import aiotable
 import logic
+import score
 
 
 #ультрафиолет
@@ -28,6 +29,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await State.asking_for_continue.set()
         await logic.notify_admins('Ультрафиолет', state)
         await aiotable.mark_cell(message.from_user.id, 2, "д")
+        await score.complete_level(message.from_id, 2)
     else:
         await message.answer(texts.wrong_answer, reply_markup=kb.get_hint_kb)
 

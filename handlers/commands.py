@@ -7,10 +7,22 @@ from states import State
 import aiotable
 import logic
 from aiogram.dispatcher import filters
+import score
+
 
 
 @dp.message_handler(commands=['start'], state="*")
 async def send_welcome(message: types.Message, state: FSMContext):
+    # await score.clear_data()
+    # await score.add_team(1, 'f1')
+    # await score.add_team(2, 'f2')
+    # await score.add_team(3, 'f3')
+    # await score.complete_level(1, 1)
+    # await score.complete_level(2, 1)
+    # await score.complete_level(3, 1)
+    # await score.complete_level(3, 2)
+    # await score.complete_level(2, 2)
+    # await score.get_level_results()
     await message.answer(texts.welcome)
     await State.entering_name.set()
 
@@ -52,4 +64,20 @@ async def send_welcome(message: types.Message, state: FSMContext):
         return
     logic.set_victim(False)
     await message.answer('ok')
+
+
+@dp.message_handler(commands=['clear'], state="*")
+async def send_welcome(message: types.Message, state: FSMContext):
+    if str(message.from_user.id) not in ADMIN_IDS:
+        return
+    await score.clear_data()
+    await message.answer('ok')
+
+
+@dp.message_handler(commands=['get_results'], state="*")
+async def send_welcome(message: types.Message, state: FSMContext):
+    if str(message.from_user.id) not in ADMIN_IDS:
+        return
+    text = await score.get_level_results()
+    await message.answer(text)
 
