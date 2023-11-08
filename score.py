@@ -14,6 +14,13 @@ async def clear_data():
     await redis_client.delete('level7')
 
 
+async def is_team_registered(id):
+    registered_teams = await get_teams()
+    for team in registered_teams:
+        if int(json.loads(team).get('id')) == int(id):
+            return True
+    return False
+
 async def add_team(id, name):
     team = {'id': id, 'name': name}
     await redis_client.rpush('teams', json.dumps(team))
@@ -28,8 +35,15 @@ async def get_level_result(level):
     return result
 
 async def complete_level(id, level):
+    level_result = await get_level_result(level)
+
+    for completed_id in level_result:
+        if int(completed_id) == int(id):
+            return
+        
     key = f'level{level}'
     await redis_client.rpush(key, id)
+    
 
 
 async def get_level_results():

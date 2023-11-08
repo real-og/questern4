@@ -19,7 +19,8 @@ async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.yes_btn:
         data = await state.get_data()
         name = data.get('team_name')
-        await score.add_team(message.from_id, name)
+        if score.is_team_registered(message.from_id):
+            await score.add_team(message.from_id, name)
 
 
         with open('audios/saw.gif', 'rb') as video:

@@ -13,16 +13,7 @@ import score
 
 @dp.message_handler(commands=['start'], state="*")
 async def send_welcome(message: types.Message, state: FSMContext):
-    # await score.clear_data()
-    # await score.add_team(1, 'f1')
-    # await score.add_team(2, 'f2')
-    # await score.add_team(3, 'f3')
-    # await score.complete_level(1, 1)
-    # await score.complete_level(2, 1)
-    # await score.complete_level(3, 1)
-    # await score.complete_level(3, 2)
-    # await score.complete_level(2, 2)
-    # await score.get_level_results()
+    await score.complete_level(message.from_id, 1)
     await message.answer(texts.welcome)
     await State.entering_name.set()
 
