@@ -19,7 +19,8 @@ async def send_welcome(message: types.Message, state: FSMContext):
     if message.text == texts.yes_btn:
         data = await state.get_data()
         name = data.get('team_name')
-        if score.is_team_registered(message.from_id):
+        is_registrated = await score.is_team_registered(message.from_id)
+        if is_registrated:
             await score.add_team(message.from_id, name)
 
 
