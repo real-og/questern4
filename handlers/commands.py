@@ -10,17 +10,19 @@ from aiogram.dispatcher import filters
 import score
 
 
-
 @dp.message_handler(commands=['start'], state="*")
 async def send_welcome(message: types.Message, state: FSMContext):
-    await score.complete_level(message.from_id, 1)
+    # await score.complete_level(message.from_id, 1)
     await message.answer(texts.welcome)
     await State.entering_name.set()
 
 
 @dp.message_handler(commands=['help'], state="*")
 async def send_welcome(message: types.Message, state: FSMContext):
-    await message.answer(texts.help_message)
+    if str(message.from_id) in ADMIN_IDS:
+        await message.answer(texts.help_admin)
+    else:
+        await message.answer(texts.help_message)
 
 
 @dp.message_handler(commands=['send_hint'], state="*")
@@ -65,7 +67,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
     await message.answer('ok')
 
 
-@dp.message_handler(commands=['get_results'], state="*")
+@dp.message_handler(commands=['results'], state="*")
 async def send_welcome(message: types.Message, state: FSMContext):
     if str(message.from_user.id) not in ADMIN_IDS:
         return

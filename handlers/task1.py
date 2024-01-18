@@ -34,14 +34,9 @@ async def send_welcome(message: types.Message, state: FSMContext):
 
     elif answer.isdecimal():
         if answer == texts.task1_3_ans:
-            with open("audios/unavailable.ogg", "rb") as file:
-                file_data = file.read()
-                await message.answer_voice(file_data, reply_markup=kb.no_sound_kb)
-            await message.answer('Продолжить?', reply_markup=kb.continue_kb)
-            await State.asking_for_continue.set()
-            await logic.notify_admins('Телефон', state)
-            await aiotable.mark_cell(message.from_user.id, 1, "д")
-            await score.complete_level(message.from_id, 1)
+            await message.answer(texts.right_number, reply_markup=kb.phone_keyboard)
+            await State.entering_phone.set()
+
         elif len(answer) == 11:
             await message.answer(texts.wrong_number(answer), reply_markup=kb.get_hint_kb)
         else:
@@ -50,6 +45,21 @@ async def send_welcome(message: types.Message, state: FSMContext):
         await message.answer(texts.no_need_question, reply_markup=kb.get_hint_kb)
     else:
         await message.answer(texts.wrong_answer, reply_markup=kb.get_hint_kb)
+
+
+@dp.message_handler(content_types=types.ContentType.CONTACT, state=State.entering_phone)
+async def set_phone_handler(message: types.Message, state: FSMContext):
+    phone = message.contact.phone_number
+    with open("audios/unavailable.ogg", "rb") as file:
+        file_data = file.read()
+        await message.answer_voice(file_data)
+    await message.answer(texts.no_sound_description, reply_markup=kb.no_sound_kb)
+    await message.answer('Продолжить?', reply_markup=kb.continue_kb)
+    await State.asking_for_continue.set()
+    await logic.notify_admins('Телефон', state)
+    await aiotable.mark_cell(message.from_user.id, 1, "д")
+    await score.complete_level(message.from_id, 1)
+    await aiotable.update_cell(message.from_user.id, 12, phone)
 
 @dp.callback_query_handler(state='*')
 async def send_channels(callback: types.CallbackQuery, state: FSMContext):

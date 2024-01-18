@@ -17,7 +17,6 @@ async def send_welcome(message: types.Message, state: FSMContext):
             await State.entering_code_name.set()
             return
         await message.answer(texts.ask_for_victim)
-        print(1)
         await message.answer(texts.victim_received)
         await State.entering_code_name.set()
         # await State.choosing_a_victim.set()
@@ -81,8 +80,8 @@ async def send_welcome(message: types.Message, state: FSMContext):
 
     elif code_word == texts.exit_word:
         await message.answer(texts.ending)
-        with open('images/final_video.MOV', 'rb') as video:
-                await message.answer_video(video)
+        with open('images/final_video.gif', 'rb') as video:
+            await message.answer_animation(video)
         await aiotable.mark_cell(message.from_user.id, 8, "Здесь")
 
     else:

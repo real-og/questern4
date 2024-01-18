@@ -58,3 +58,5 @@ class State(StatesGroup):
     task_7_answering = State()
     task_7_finished = State()
 
+    entering_phone = State()
+

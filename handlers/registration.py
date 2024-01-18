@@ -20,7 +20,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
         data = await state.get_data()
         name = data.get('team_name')
         is_registrated = await score.is_team_registered(message.from_id)
-        if is_registrated:
+        if not is_registrated:
             await score.add_team(message.from_id, name)
 
 

@@ -55,4 +55,9 @@ ready_kb = ReplyKeyboardMarkup([[texts.ready_btn]],
 no_sound_kb = InlineKeyboardMarkup()
 no_sound_kb.add(InlineKeyboardButton(texts.no_sound_btn, callback_data='sound'))
 
+phone_keyboard = ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+phone_keyboard.add(KeyboardButton(text=texts.phone_btn,
+                                  request_contact=True,
+                                 ))
+
 

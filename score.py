@@ -55,10 +55,12 @@ async def get_level_results():
         teams_dict[f"b'{str(json.loads(team).get('id'))}'"] = json.loads(team).get('name')
 
     result = dict()
+    tasks_done =  dict()
 
     for i in range(1, 8):
         level_result = await get_level_result(i)
         for place, id in enumerate(level_result):
+            tasks_done[id] = tasks_done.get(id, 0) + 1
             result[id] = result.get(id, 0) + place + 1
 
     sorted_result = dict(sorted(result.items(), key=lambda item: item[1]))
@@ -67,9 +69,9 @@ async def get_level_results():
     for id in sorted_result:
         final_place += 1
         if teams_dict.get(str(id)) is None:
-            text += f"{final_place}) {id} - {sorted_result.get(id)}\n"
+            text += f"{final_place}) {id} - баллов:{sorted_result.get(id)} пройдено:{tasks_done.get(id, 0)}\n"
         else:
-            text += f"{final_place}) {teams_dict.get(str(id))} - {sorted_result.get(id)}\n"
+            text += f"{final_place}) {teams_dict.get(str(id))} - баллов:{sorted_result.get(id)} пройдено:{tasks_done.get(id, 0)}\n"
 
     return text
 

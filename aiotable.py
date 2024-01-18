@@ -54,6 +54,13 @@ async def get_ids():
     res = await sheet.col_values(1) 
     return res
 
+async def update_cell(id, cell_num, value):
+    sheet = await get_sheet()
+    cell = await sheet.find(str(id))
+    if cell is None:
+        return
+    row_number = cell.row
+    await sheet.update_cell(row_number, cell_num, str(value))
 
 
 
