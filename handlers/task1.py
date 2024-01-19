@@ -50,6 +50,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
 @dp.message_handler(content_types=types.ContentType.CONTACT, state=State.entering_phone)
 async def set_phone_handler(message: types.Message, state: FSMContext):
     phone = message.contact.phone_number
+    await message.answer(texts.voice_received)
     with open("audios/unavailable.ogg", "rb") as file:
         file_data = file.read()
         await message.answer_voice(file_data)

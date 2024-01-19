@@ -80,8 +80,10 @@ async def send_welcome(message: types.Message, state: FSMContext):
 
     elif code_word == texts.exit_word:
         await message.answer(texts.ending)
-        with open('images/final_video.gif', 'rb') as video:
-            await message.answer_animation(video)
+        # with open('images/final_video.gif', 'rb') as video:
+        #     await message.answer_animation(video)
+        with open('images/final_video.MOV', 'rb') as video:
+            await message.answer_video(video)
         await aiotable.mark_cell(message.from_user.id, 8, "Здесь")
 
     else:

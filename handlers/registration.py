@@ -24,8 +24,11 @@ async def send_welcome(message: types.Message, state: FSMContext):
             await score.add_team(message.from_id, name)
 
 
-        with open('audios/saw.gif', 'rb') as video:
-            await message.answer_animation(video)
+        # with open('audios/saw.gif', 'rb') as video:
+        #     await message.answer_animation(video)
+            
+        with open('audios/saw.MOV', 'rb') as video:
+            await message.answer_video(video)
 
         await message.answer(texts.succes_registrated, reply_markup=kb.begin_quest_kb)
         await State.start_confirmation.set()
